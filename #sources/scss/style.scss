@@ -1,0 +1,175 @@
+/*
+=============== 
+Fonts
+===============
+*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600&display=swap');
+
+/*
+=============== 
+Null Style
+===============
+*/
+@import 'nullStyle.scss';
+
+/*
+=============== 
+Variables
+===============
+*/
+:root {
+    --clr-white: #fff;
+    --clr-black: #000;
+    --ff-primary: "Roboto", sans-serif;
+    --transition: all 0.3s linear;
+    --spacing: 0.25rem;
+    --radius: 0.5rem;
+    --light-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    --dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    --max-width: 1170px;
+    --fixed-width: 620px;
+}
+
+/*
+=============== 
+Global Styles
+===============
+*/
+
+body {
+    font-family: var(--ff-primary);
+    color: var(--clr-black);
+}
+h1,h2,h3,h4 {
+  text-transform: capitalize;
+  line-height: 1.25;
+}
+h1 {
+  font-size: 3rem;
+}
+h2 {
+  font-size: 2rem;
+}
+h3 {
+  font-size: 1.25rem;
+}
+h4 {
+  font-size: 0.875rem;
+}
+p {
+  margin-bottom: 1.25rem;
+}
+
+/*  global classes */
+.wrapper {
+    min-height: 100vh;
+    overflow: hidden;
+    transition: all 0.3s linear;
+    display: grid;
+    place-items: center;
+}
+.clock {
+    width: 650px;
+    height: 650px;
+    border-radius: 50%;
+    background: var(--clr-white);
+    border: 10px solid var(--clr-black);
+    display: grid;
+    place-items: center;
+}
+.dashes-container {
+    width: 580px;
+    height: 580px;
+    position: relative;
+    .dash {
+        position: absolute;
+        left: 50%;
+        transform-origin: 0 290px;
+        width: 1px;
+        height: 20px;
+        background: var(--clr-black);
+        @for $num from 1 through 60 {
+            &_#{$num} {
+                transform: rotate(6deg * $num) translateX(-50%);
+                @if $num % 5 == 0 {
+                    width: 3px;
+                }
+            }
+        }
+    }
+}
+.numbers-container {
+    width: 500px;
+    height: 500px;
+    position: relative;
+    .num {
+        position: absolute;
+        left: 50%;
+        transform-origin: 0 250px;
+        font: {
+            weight: 500;
+            size: 3rem;
+        };
+        @for $i from 1 through 12 {
+            &_outside_#{$i} {
+                transform: rotate(30deg * $i) translateX(-50%);
+            }
+        }
+        @for $i from 1 through 12 {
+            &_inside_#{$i} {
+                transform: rotate(-30deg * $i);
+            }
+        }
+    }
+    &_absolute {
+        position: absolute;
+    }
+}
+.center-circle {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background: #FF4D4D;
+    border-radius: 50%;
+    z-index: 4;
+}
+
+.arrow {
+    outline: none;
+    position: relative;
+    transform: rotate(0deg) translateY(-20%);
+    transform-origin: center;
+    box-shadow: var(--dark-shadow);
+    // transition: var(--transition);
+    &_sec {
+        width: 4px;
+        height: 238px;
+        background: #FF0000;
+        z-index: 3;
+        &::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 20px;
+            background: #FF0000;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+        }
+    }
+    &_min {
+        width: 7.5px;
+        height: 330px;
+        background: var(--clr-black);
+        z-index: 2;
+    }
+    &_hours {
+        width: 9px;
+        height: 250px;
+        background: var(--clr-black);
+        z-index: 1;
+    }
+    &--absolute {
+        position: absolute;
+    }
+}
